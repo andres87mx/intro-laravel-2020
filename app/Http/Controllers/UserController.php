@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Hash;
 use App\User;
 
 class UserController extends Controller
@@ -17,10 +17,15 @@ class UserController extends Controller
     }
 
     public function store(Request $request){
+        $request->validate([
+            'name' => ['required'],
+            'email' => ['required', 'email', 'unique:users'],
+            'password' => ['required', 'min:8'],
+        ]);
         User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => $request->password,
+            'password' => Hash::make($request->password),
         ]);
         return back();
     }
