@@ -41,3 +41,22 @@ Route::get('users', function () {
             {$user->posts->count()} <br>";
     }
 });
+
+Route::get('collections', function () {
+    $users = User::all();
+    //dd($users);
+    //dd($users->contains(4));
+    //dd($users->except([1,2,3]));
+    //dd($users->only((4)));
+    //dd($users->find(4));
+    dd($users->load('posts'));
+});
+
+Route::get('serialization', function () {
+    $users = User::all();
+    //dd($users->toArray());
+    $user = $users->find(1);
+    //dd($user);
+    dd($user->toJson());
+    
+});
