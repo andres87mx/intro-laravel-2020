@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Post;
+use App\User;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,7 +13,6 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-use App\Post;
 
 Route::get('eloquent', function () {
     $posts = Post::where('id','>=','20')->orderBy('id','desc')->take(3)->get();
@@ -26,18 +26,17 @@ Route::get('posts', function () {
     foreach ($posts as $post) {
         echo "
             $post->id
-            <strong>{$post->user->name} </strong>
-            $post->title <br>";
+            <strong>{$post->user->get_name} </strong>
+            $post->get_title <br>";
     }
 });
 
-use App\User;
 Route::get('users', function () {
     $users = User::get();
     foreach ($users as $user) {
         echo "
             $user->id
-            $user->name 
+            $user->get_name 
             {$user->posts->count()} <br>";
     }
 });
