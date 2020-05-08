@@ -29,7 +29,7 @@
                             <td> {{ $post->title}}</td>
                             <td> <a href="{{route('posts.edit',$post)}}" class="btn btn-primary btn-sm">Editar</a></td>
                             <td>
-                              <form action="route('posts.destroy',$post)" method="POST">
+                              <form action="{{route('posts.destroy',$post)}}" method="POST">
                                 @csrf
                                 @method('DELETE')
                                 <input type="submit" value="Eliminar" class="btn btn-sm btn-danger" onclick="return confirm('¿Esta seguro de eliminar...?')">
