@@ -53,4 +53,21 @@ class PostConstrollerTest extends TestCase
         $response->assertStatus(404); 
         
     }
+
+    public function test_update()
+    {
+        $this->withoutExceptionHandling();
+        //vendor/bin/phpunit --filter test_update ->UNICO TEST
+        $post = factory(Post::class)->create();
+
+        $response = $this->json('PUT', "/api/posts/$post->id", [
+            'title' => 'NUEVO POST'
+        ]);
+
+        $response->assertJsonStructure(['id','title','created_at','updated_at'])
+            ->assertJson(['title' => 'NUEVO POST'])
+            ->assertStatus(200);
+        
+        $this->assertDatabaseHas('posts', ['title' => 'NUEVO POST']);
+    }
 }
